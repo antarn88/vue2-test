@@ -1,0 +1,17 @@
+{
+  "vue": {
+    "scope": "vue",
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "  <div></div>",
+      "</template>",
+      "",
+      "<script lang=\"ts\" setup></script>",
+      "",
+      "<style lang=\"scss\" scoped></style>",
+      "",
+    ],
+    "description": "Create vue sceleton",
+  },
+}
