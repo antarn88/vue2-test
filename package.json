@@ -10,16 +10,25 @@
     "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check .",
     "lint": "npm run lint:js && npm run lint:prettier",
-    "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix"
+    "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix",
+    "server": "json-server-auth ./database/db.json --port 3001"
   },
   "dependencies": {
+    "@nuxtjs/composition-api": "^0.34.0",
     "@popperjs/core": "^2.11.8",
+    "axios": "^0.28.1",
     "bootstrap": "^5.3.3",
     "core-js": "^3.25.3",
+    "jwt-decode": "^4.0.0",
     "nuxt": "^2.15.8",
+    "nuxt-typed-vuex": "^0.3.1",
+    "vee-validate": "^3.4.15",
     "vue": "^2.7.10",
+    "vue-property-decorator": "^9.1.2",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "vue-toast-notification": "^1.0.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
@@ -35,5 +44,6 @@
     "prettier": "^3.3.2",
     "sass": "^1.77.7",
     "sass-loader": "^10.5.2"
-  }
+  },
+  "type": "commonjs"
 }

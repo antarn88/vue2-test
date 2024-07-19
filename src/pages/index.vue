@@ -1,17 +1,16 @@
 <template>
-  <div class="container my-5">
-    <div class="row text-center">
-      <div class="col">
-        <h1 class="text-success">Vue2 teszt alkalmazás</h1>
-      </div>
-    </div>
-  </div>
+  <GreetingComponent />
 </template>
 
 <script lang="ts">
-  // import Vue from "vue";
+  import Vue from "vue";
+  import GreetingComponent from "../components/GreetingComponent.vue";
 
-  // export default Vue.extend({
-  //   name: "IndexPage",
-  // });
+  export default Vue.extend({
+    name: "IndexPage",
+    components: {
+      GreetingComponent,
+    },
+    layout: "default",
+  });
 </script>
