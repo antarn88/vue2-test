@@ -17,18 +17,38 @@ extend("email", {
   message: "Érvénytelen e-mail!",
 });
 
+// Minimum karakterhossz
 extend("min", {
   validate(value, { min }) {
     return value.length >= min;
   },
   params: ["min"],
-  message: "Nem lehet kisebb, mint {min} karaktert!",
+  message: "Nem lehet kisebb, mint {min} karakter!",
 });
 
+// Maximum karakterhossz
 extend("max", {
   validate(value, { max }) {
     return value.length <= max;
   },
   params: ["max"],
-  message: "Nem lehet nagyobb, mint {max} karaktert!",
+  message: "Nem lehet nagyobb, mint {max} karakter!",
+});
+
+// Minimum számérték
+extend("min_value", {
+  validate(value, { min }) {
+    return Number(value) >= Number(min);
+  },
+  params: ["min"],
+  message: "Nem lehet kisebb, mint {min}!",
+});
+
+// Maximum számérték
+extend("max_value", {
+  validate(value, { max }) {
+    return Number(value) <= Number(max);
+  },
+  params: ["max"],
+  message: "Nem lehet nagyobb, mint {max}!",
 });

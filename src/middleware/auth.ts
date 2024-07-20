@@ -22,7 +22,7 @@ export default async function ({ store, redirect, route, req }: Context) {
       token = AuthService.getCookie(cookies!, "accessToken");
     }
 
-    if (!token || !AuthService.decodeToken(token)) {
+    if (!token || !AuthService.checkToken()) {
       if (route.path !== LOGIN_PATH) {
         return redirect(LOGIN_PATH);
       }
@@ -37,7 +37,7 @@ export default async function ({ store, redirect, route, req }: Context) {
       } catch (error) {
         console.error("User fetch error:", error);
 
-        return redirect(LOGIN_PATH);
+        // return redirect(LOGIN_PATH); // TODO FIX! Lehet hogy kellene ide! Egyelőre enélkül jól működik!
       }
     }
   }

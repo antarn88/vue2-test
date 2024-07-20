@@ -63,8 +63,7 @@
             <div class="mb-3">
               <label for="age" class="form-label">Kor *</label>
 
-              <!-- TODO Validációt kiegészíteni! -->
-              <ValidationProvider v-slot="{ errors }" name="age" rules="required">
+              <ValidationProvider v-slot="{ errors }" name="age" rules="required|min_value:1|max_value:120">
                 <div>
                   <input id="age" v-model="form.age" type="number" name="age" class="form-control" :class="{ 'is-invalid': errors[0] }" />
                   <span class="invalid-feedback">{{ errors[0] }}</span>
@@ -129,9 +128,11 @@
     },
 
     async mounted(): Promise<void> {
-      if (this.userId === "0") {
-        this.isFormLoaded = true;
-      } else {
+      this.userId === "0" ? (this.isFormLoaded = true) : await this.fetchUser();
+    },
+
+    methods: {
+      async fetchUser(): Promise<void> {
         try {
           const userData = await UserService.getUserById(this.userId);
 
@@ -146,10 +147,8 @@
         } catch (error) {
           this.$toast.error("Hiba a felhasználó adatainak lekérésekor!");
         }
-      }
-    },
+      },
 
-    methods: {
       async onSubmit(): Promise<void> {
         if (this.userId === "0") {
           try {
@@ -176,11 +175,9 @@
         }
       },
 
-      goBack() {
+      goBack(): void {
         this.$router.push(this.USER_LIST_PATH);
       },
     },
   });
 </script>
-
-<style lang="scss" scoped></style>
