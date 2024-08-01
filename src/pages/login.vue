@@ -77,15 +77,16 @@
       async onSubmit() {
         const response = await AuthService.login(this.form);
         if (response?.status === 200 && response.data.accessToken) {
-          this.$store.dispatch("auth/setLoggedInUser", response.data.user);
-          AuthService.setLoggedInUser(response.data.user);
+          this.$store.dispatch("auth/setLoggedInUser", response.data.loggedInUser);
+          this.$store.dispatch("auth/setAccessToken", response.data.accessToken);
+          AuthService.setLoggedInUser(response.data.loggedInUser);
 
           document.cookie = `accessToken=${response.data.accessToken}`;
           localStorage.setItem("accessToken", response.data.accessToken);
 
           this.$router.push("/");
-          AuthService.setLoggedInUser(response.data.user);
-        } else if (response?.status === 400) {
+          AuthService.setLoggedInUser(response.data.loggedInUser);
+        } else if (response?.status === 401) {
           this.$toast.error("Rossz felhasználónév vagy jelszó!");
         } else {
           this.$toast.error("Ismeretlen hiba történt!");

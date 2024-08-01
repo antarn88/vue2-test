@@ -1,6 +1,6 @@
 import { Module } from "vuex";
-import { SortType } from "../../enums/SortType";
-import { OrderType } from "../../enums/OrderType";
+import { OrderType } from "../enums/OrderType";
+import { SortType } from "../enums/SortType";
 
 interface UserState {
   currentPage: number;
@@ -10,13 +10,13 @@ interface UserState {
   totalUserListLength: number;
 }
 
-const state: UserState = {
+const state: () => UserState = () => ({
   currentPage: 1,
   currentPerPage: 10,
   orderType: OrderType.ASC,
   sortType: SortType.NAME,
   totalUserListLength: 0,
-};
+});
 
 const getters = {
   getCurrentPage: (state: UserState) => state.currentPage,

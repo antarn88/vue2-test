@@ -63,8 +63,6 @@
         if (!this.loggedInUser) {
           this.loggedInUser = AuthService.loggedInUser;
         }
-
-        AuthService.setLoggedInUserByToken();
       },
 
       logout() {

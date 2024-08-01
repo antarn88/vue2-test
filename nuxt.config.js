@@ -24,6 +24,7 @@ export default {
   plugins: [
     { src: "~/plugins/bootstrap.js", mode: "client" },
     { src: "~/plugins/vee-validate.js", mode: "client" },
+    { src: "~/plugins/axios.js", mode: "client" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

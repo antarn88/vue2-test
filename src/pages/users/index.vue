@@ -27,7 +27,7 @@
 
         <div class="table-responsive">
           <table class="table table-striped mb-5">
-            <thead class="table-dark">
+            <thead v-if="!isEmptyList" class="table-dark">
               <tr>
                 <th scope="col" class="user-select-none cursor-pointer">#</th>
 
@@ -142,7 +142,7 @@
               </tr>
             </tbody>
 
-            <tfoot>
+            <tfoot v-if="!isEmptyList">
               <tr>
                 <td scope="row" colspan="5" class="text-end">
                   <div class="d-flex justify-content-between align-items-center">
@@ -293,24 +293,23 @@
 
           const usersResponse = await UserService.getUsers({
             _page: this.currentPage,
-            _limit: this.currentPerPage,
+            _per_page: this.currentPerPage,
             _sort: this.sortType,
             _order: this.orderType,
           });
 
-          // this.$store.dispatch("user/setTotalUserListLength", usersResponse.length);
-          this.$store.dispatch("user/setTotalUserListLength", 100); // Beégetve fix tömbméret, mert a JSON szerver régi verziója nem támogatja.
+          this.$store.dispatch("user/setTotalUserListLength", usersResponse.items);
 
-          this.users = usersResponse as User[];
+          this.users = usersResponse.data;
           this.isError = false;
 
           if (!this.users.length) {
-            // isEmptyList = true;
+            this.isEmptyList = true;
           }
 
           this.updateDisplayedPages();
         } catch (error) {
-          // isError = true;
+          this.isError = true;
         } finally {
           this.isLoading = false;
         }

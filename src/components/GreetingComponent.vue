@@ -33,6 +33,14 @@
         </ul>
       </div>
     </div>
+
+    <!-- Watch teszt -->
+    <div class="row mt-5">
+      <div class="col">
+        <button class="btn btn-success" @click="increaseCounter">Watch teszt</button>
+        <p>Számlálás: {{ counter }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,6 +53,7 @@
     names: Array<{ id: string; name: string }>;
     amounts: number[];
     authService: typeof AuthService;
+    counter: number;
   }
 
   export default Vue.extend({
@@ -61,6 +70,7 @@
         ],
         amounts: [145, 787, 1215, 1219, 78787],
         authService: AuthService,
+        counter: 0,
       };
     },
 
@@ -76,11 +86,20 @@
       },
     },
 
+    watch: {
+      counter(newValue: number): void {
+        console.log("A számláló értéke a következő:", newValue);
+      },
+    },
+
     created(): void {
       this.authService.init(this.$store);
     },
 
     methods: {
+      increaseCounter(): void {
+        this.counter++;
+      },
       toggleVisibility() {
         this.isVisible = !this.isVisible;
       },

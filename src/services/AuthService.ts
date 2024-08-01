@@ -7,7 +7,7 @@ import { LoginData } from "../models/LoginData";
 import { AuthenticatedUser } from "../models/NewUserResponse";
 import UserService from "./UserService";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "http://localhost:5134/api";
 const LOGIN_PATH = "/login";
 
 let store: Store<any> | null = null;
@@ -138,7 +138,7 @@ export const AuthService = {
         const decodedToken = AuthService.decodeToken(token!);
 
         try {
-          const user = await UserService.getUserByEmail(decodedToken!.email);
+          const user = await UserService.getUserByEmail(decodedToken!.sub, token!);
           store?.dispatch("auth/setLoggedInUser", user);
           AuthService.setLoggedInUser(user);
           AuthService.loggedInUser = user;

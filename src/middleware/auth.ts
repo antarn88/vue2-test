@@ -1,10 +1,9 @@
 import { Context } from "@nuxt/types";
 import { AuthService } from "../services/AuthService";
-import UserService from "../services/UserService";
 
 const LOGIN_PATH = "/login";
 
-export default async function ({ store, redirect, route, req }: Context) {
+export default function ({ store, redirect, route, req }: Context) {
   AuthService.init(store);
 
   const loggedInUser = store.state.auth.loggedInUser;
@@ -22,22 +21,11 @@ export default async function ({ store, redirect, route, req }: Context) {
       token = AuthService.getCookie(cookies!, "accessToken");
     }
 
+    store.dispatch("auth/setAccessToken", token);
+
     if (!token || !AuthService.checkToken()) {
       if (route.path !== LOGIN_PATH) {
         return redirect(LOGIN_PATH);
-      }
-    } else {
-      const decodedToken = AuthService.decodeToken(token);
-
-      try {
-        const user = await UserService.getUserByEmail(decodedToken!.email);
-        store.dispatch("auth/setLoggedInUser", user);
-        AuthService.setLoggedInUser(user);
-        AuthService.loggedInUser = user;
-      } catch (error) {
-        console.error("User fetch error:", error);
-
-        // return redirect(LOGIN_PATH); // TODO FIX! Lehet hogy kellene ide! Egyelőre enélkül jól működik!
       }
     }
   }
