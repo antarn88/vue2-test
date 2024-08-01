@@ -1,2 +1,6 @@
 @import "bootstrap/scss/bootstrap.scss";
 @import "vue-toast-notification/dist/theme-bootstrap.css";
+
+body {
+  overflow-y: scroll;
+}
