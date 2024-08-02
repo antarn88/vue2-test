@@ -4,7 +4,7 @@ import { User } from "../models/User";
 import { OrderType } from "../enums/OrderType";
 import { PagedResult } from "../models/PagedResult";
 
-const API_URL = "http://localhost:5134/api";
+const API_URL = "https://localhost:7099/api";
 
 export default {
   async getUsers(params: PagingOptions): Promise<PagedResult<User>> {
