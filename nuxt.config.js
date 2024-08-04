@@ -45,4 +45,6 @@ export default {
   router: {
     middleware: ["auth", "cache-control"],
   },
+
+  target: "static",
 };
