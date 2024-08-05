@@ -9,9 +9,7 @@ export default function ({ store, redirect, route, req }: Context) {
   const loggedInUser = store.state.auth.loggedInUser;
   const checkToken = AuthService.checkToken();
 
-  if (loggedInUser && checkToken) {
-    AuthService.setLoggedInUser(loggedInUser);
-  } else {
+  if (!loggedInUser || !checkToken) {
     let token;
 
     if (process.client) {

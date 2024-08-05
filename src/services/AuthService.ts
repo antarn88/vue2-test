@@ -138,10 +138,15 @@ export const AuthService = {
         const decodedToken = AuthService.decodeToken(token!);
 
         try {
-          const user = await UserService.getUserByEmail(decodedToken!.sub, token!);
-          store?.dispatch("auth/setLoggedInUser", user);
-          AuthService.setLoggedInUser(user);
-          AuthService.loggedInUser = user;
+          const userResp = await UserService.getUserByEmail(decodedToken!.sub, token!);
+          if (userResp.status === 401) {
+            AuthService.logout();
+
+            return;
+          }
+
+          store?.dispatch("auth/setLoggedInUser", userResp);
+          AuthService.setLoggedInUser(userResp.data);
         } catch (error) {
           console.error("User fetch error:", error);
         }

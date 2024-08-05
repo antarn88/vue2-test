@@ -85,7 +85,6 @@
           localStorage.setItem("accessToken", response.data.accessToken);
 
           this.$router.push("/");
-          AuthService.setLoggedInUser(response.data.loggedInUser);
         } else if (response?.status === 401) {
           this.$toast.error("Rossz felhasználónév vagy jelszó!");
         } else {

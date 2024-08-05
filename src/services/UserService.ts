@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { PagingOptions } from "../models/PagingOptions";
 import { User } from "../models/User";
 import { OrderType } from "../enums/OrderType";
@@ -32,10 +32,10 @@ export default {
     };
   },
 
-  async getUserByEmail(email: string, token: string): Promise<User> {
+  async getUserByEmail(email: string, token: string): Promise<AxiosResponse<User>> {
     const response = await axios.get(`${API_URL}/users?email=${email}`, { headers: { Authorization: `Bearer ${token}` } });
 
-    return response.data;
+    return response;
   },
 
   async createUser(user: Omit<User, "id">): Promise<User> {
