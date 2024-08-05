@@ -17,6 +17,7 @@
     },
 
     async mounted(): Promise<void> {
+      AuthService.init(this.$store);
       const token = this.$store.state.auth.accessToken;
       if (!token) return;
 

@@ -14,7 +14,7 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div v-if="loggedInUser?.email" id="navbarNavAltMarkup" class="collapse navbar-collapse">
+      <div v-if="accessToken" id="navbarNavAltMarkup" class="collapse navbar-collapse">
         <div class="navbar-nav">
           <NuxtLink to="/" class="nav-link user-select-none" exact exact-active-class="active">
             <a @click="closeMenu">Kezdőlap</a>
@@ -25,9 +25,9 @@
         </div>
       </div>
 
-      <div v-if="loggedInUser?.email" class="dropdown">
+      <div v-if="accessToken" class="dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {{ loggedInUser.name }}
+          {{ loggedInUser?.name || "" }}
         </a>
 
         <ul class="dropdown-menu">
@@ -42,7 +42,6 @@
   import Vue from "vue";
   import { AuthService } from "../services/AuthService";
   import { User } from "../models/User";
-  import { makeReactive } from "../utils/utils";
 
   export default Vue.extend({
     data() {
@@ -52,27 +51,28 @@
           password: "",
         },
         loggedInUser: undefined as User | undefined,
+        accessToken: "",
       };
     },
 
+    watch: {
+      "$store.state.auth.accessToken": function (newVal: string) {
+        this.accessToken = newVal;
+      },
+
+      "$store.state.auth.loggedInUser": function (newVal: User) {
+        this.loggedInUser = newVal;
+      },
+    },
+
     mounted(): void {
-      this.manageLoggedInUser();
+      this.accessToken = this.$store.state.auth.accessToken;
+      this.loggedInUser = this.$store.state.auth.loggedInUser;
     },
 
     methods: {
-      manageLoggedInUser() {
-        makeReactive(AuthService, "loggedInUser", (newValue: User) => {
-          this.loggedInUser = newValue;
-        });
-
-        if (!this.loggedInUser) {
-          this.loggedInUser = AuthService.loggedInUser;
-        }
-      },
-
       logout() {
         AuthService.logout();
-        this.manageLoggedInUser();
       },
 
       closeMenu(): void {
