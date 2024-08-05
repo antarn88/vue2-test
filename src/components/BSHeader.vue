@@ -7,6 +7,7 @@
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNavAltMarkup"
+        data-bs-display="static"
         aria-controls="navbarNavAltMarkup"
         aria-expanded="false"
         aria-label="Toggle navigation"
@@ -15,17 +16,21 @@
       </button>
       <div v-if="loggedInUser?.email" id="navbarNavAltMarkup" class="collapse navbar-collapse">
         <div class="navbar-nav">
-          <NuxtLink to="/" class="nav-link user-select-none" exact exact-active-class="active">Kezdőlap</NuxtLink>
-          <NuxtLink to="/users" class="nav-link user-select-none" exact exact-active-class="active">Felhasználók</NuxtLink>
+          <NuxtLink to="/" class="nav-link user-select-none" exact exact-active-class="active">
+            <a @click="closeMenu">Kezdőlap</a>
+          </NuxtLink>
+          <NuxtLink to="/users" class="nav-link user-select-none" exact exact-active-class="active">
+            <a @click="closeMenu">Felhasználók</a>
+          </NuxtLink>
         </div>
       </div>
 
-      <div v-if="loggedInUser?.email" class="dropdown dropdown-external">
+      <div v-if="loggedInUser?.email" class="dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           {{ loggedInUser.name }}
         </a>
 
-        <ul class="dropdown-menu mr-5 dropdown-internal">
+        <ul class="dropdown-menu">
           <li><a class="dropdown-item cursor-pointer" @click="logout()">Kijelentkezés</a></li>
         </ul>
       </div>
@@ -56,8 +61,8 @@
 
     methods: {
       manageLoggedInUser() {
-        this.loggedInUser = makeReactive(AuthService, "loggedInUser", (newValue: User) => {
-          this.loggedInUser = { ...newValue };
+        makeReactive(AuthService, "loggedInUser", (newValue: User) => {
+          this.loggedInUser = newValue;
         });
 
         if (!this.loggedInUser) {
@@ -69,6 +74,10 @@
         AuthService.logout();
         this.manageLoggedInUser();
       },
+
+      closeMenu(): void {
+        document.querySelector("#navbarNavAltMarkup")?.classList.toggle("show");
+      },
     },
   });
 </script>
@@ -77,15 +86,5 @@
   .cursor-pointer {
     cursor: pointer;
     user-select: none;
-  }
-
-  .dropdown-external {
-    position: relative;
-    left: 10px;
-  }
-
-  .dropdown-internal {
-    position: absolute;
-    left: -70px;
   }
 </style>

@@ -25,9 +25,7 @@
 
       try {
         const user = await UserService.getUserByEmail(decodedToken!.sub, token);
-        this.$store.dispatch("auth/setLoggedInUser", user);
         AuthService.setLoggedInUser(user);
-        AuthService.loggedInUser = user;
       } catch (error) {
         console.error("User fetch error:", error);
       }

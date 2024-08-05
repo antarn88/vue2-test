@@ -28,8 +28,8 @@ export const AuthService = {
   },
 
   setLoggedInUser(user: User | undefined): void {
-    store?.dispatch("auth/setLoggedInUser", user);
     this.loggedInUser = user;
+    store?.dispatch("auth/setLoggedInUser", this.loggedInUser);
   },
 
   logout(): void {
