@@ -138,6 +138,7 @@ export const AuthService = {
         const decodedToken = AuthService.decodeToken(token!);
 
         try {
+          await UserService.checkServer(); // TODO Csak teszt célból van itt
           const userResp = await UserService.getUserByEmail(decodedToken!.sub, token!);
           if (userResp.status === 401) {
             AuthService.logout();
