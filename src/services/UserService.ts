@@ -53,9 +53,4 @@ export default {
   async deleteUser(id: string): Promise<void> {
     await axios.delete(`${API_URL}/users/${id}`);
   },
-
-  // TODO Csak teszt célból van itt
-  async checkServer(): Promise<void> {
-    await axios.get(`${API_URL}/check-server`);
-  },
 };
