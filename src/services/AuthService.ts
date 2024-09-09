@@ -7,7 +7,7 @@ import { LoginData } from "../models/LoginData";
 import { AuthenticatedUser } from "../models/NewUserResponse";
 import UserService from "./UserService";
 
-const API_URL = "https://user-server-ejc2gtb6hqb4dtbh.polandcentral-01.azurewebsites.net/api";
+const API_URL = "https://localhost:7099/api";
 const LOGIN_PATH = "/login";
 
 let store: Store<any> | null = null;

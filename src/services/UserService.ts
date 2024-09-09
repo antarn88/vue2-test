@@ -4,7 +4,7 @@ import { User } from "../models/User";
 import { OrderType } from "../enums/OrderType";
 import { PagedResult } from "../models/PagedResult";
 
-const API_URL = "https://user-server-ejc2gtb6hqb4dtbh.polandcentral-01.azurewebsites.net/api";
+const API_URL = "https://localhost:7099/api";
 
 export default {
   async getUsers(params: PagingOptions): Promise<PagedResult<User>> {
@@ -33,7 +33,7 @@ export default {
   },
 
   async getUserByEmail(email: string, token: string): Promise<AxiosResponse<User>> {
-    const response = await axios.get(`${API_URL}/users?email=${email}`, { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.get(`${API_URL}/users/by-email?email=${email}`, { headers: { Authorization: `Bearer ${token}` } });
 
     return response;
   },
